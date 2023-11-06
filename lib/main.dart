@@ -45,7 +45,7 @@ class _AppState extends State<App> {
           child: Scaffold(
             appBar: const TabBar(
               tabs: <Tab>[
-                Tab(text: "Лаб. 3 (2)"),
+                Tab(text: "Лаб. 3 (2+4)"),
                 Tab(text: "Лаб. 4 (WIP)"),
               ],
             ),
@@ -53,7 +53,7 @@ class _AppState extends State<App> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 Lab3Page(apiRepository: _apiRepository),
-                const Lab4Page(),
+                Lab4Page(apiRepository: _apiRepository),
               ],
             ),
           ),

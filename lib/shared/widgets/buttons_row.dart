@@ -4,12 +4,12 @@ class ButtonsRowElement {
   const ButtonsRowElement({
     required this.label,
     required this.onPressed,
-    required this.tooltip,
+    this.tooltip,
   });
 
   final String label;
   final VoidCallback onPressed;
-  final String tooltip;
+  final String? tooltip;
 }
 
 class ButtonsRow extends StatefulWidget {
@@ -63,16 +63,18 @@ class _ButtonsRowState extends State<ButtonsRow> {
         curve: Curves.easeOutCubic,
       );
 
-  Widget buttonBuilder(ButtonsRowElement element) => Padding(
-        padding: widget.padding,
-        child: Tooltip(
-          message: element.tooltip,
-          child: ElevatedButton(
-            onPressed: element.onPressed,
-            child: Text(element.label),
-          ),
-        ),
-      );
+  Widget buttonBuilder(ButtonsRowElement element) {
+    final Widget btn = ElevatedButton(
+      onPressed: element.onPressed,
+      child: Text(element.label),
+    );
+    return Padding(
+      padding: widget.padding,
+      child: element.tooltip != null
+          ? Tooltip(message: element.tooltip, child: btn)
+          : btn,
+    );
+  }
 
   @override
   Widget build(BuildContext context) => Stack(

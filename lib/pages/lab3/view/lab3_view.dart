@@ -14,6 +14,20 @@ class Lab3View extends StatelessWidget {
             child: ButtonsRow(
               buttonValues: [
                 ButtonsRowElement(
+                  label: "Создать базу данных",
+                  onPressed: () =>
+                      context.read<Lab3Bloc>().add(Lab3CreateDatabaseEvent()),
+                  tooltip:
+                      "CREATE DATABASE `Vozovikov`",
+                ),
+                ButtonsRowElement(
+                  label: "Удалить базу данных",
+                  onPressed: () =>
+                      context.read<Lab3Bloc>().add(Lab3DropDatabaseEvent()),
+                  tooltip:
+                      "DROP DATABASE `Vozovikov`",
+                ),
+                ButtonsRowElement(
                   label: "Создать таблицу",
                   onPressed: () =>
                       context.read<Lab3Bloc>().add(Lab3CreateTableEvent()),
@@ -67,29 +81,7 @@ class Lab3View extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: BlocBuilder<Lab3Bloc, Lab3State>(
-              builder: (context, state) => switch (state) {
-                final Lab3Initial _ =>
-                  const HelloView(), // приветственное сообщение
-                final Lab3Ok _ => const OkView(), // запрос успешно выполнен
-                final Lab3Loading _ => const LoadingView(), // загрузка
-                final Lab3Error e =>
-                  ErrorView(error: e.exception), // запрос выполнен неуспешно
-                final Lab3Employees es =>
-                  TableView(table: es.table), // вся таблица
-                final Lab3EmployeesPhoneNumbersAndSalary es =>
-                  // таблица-результат первого запроса
-                  TableView(table: es.table),
-                final Lab3EmployeesSortedByAddress es =>
-                  // таблица-результат второго запроса
-                  TableView(table: es.table),
-                final Lab3EmployeesByWorkDuration es =>
-                  // таблица-результат третьего запроса
-                  TableView(table: es.table),
-              },
-            ),
-          ),
+          const Expanded(child: LabsBlocBuilder<Lab3Bloc>()),
         ],
       );
 }

@@ -3,6 +3,11 @@ part of 'lab3_bloc.dart';
 @immutable
 sealed class Lab3Event {}
 
+
+final class Lab3CreateDatabaseEvent extends Lab3Event {}
+
+final class Lab3DropDatabaseEvent extends Lab3Event {}
+
 final class Lab3CreateTableEvent extends Lab3Event {}
 
 final class Lab3DropTableEvent extends Lab3Event {}
