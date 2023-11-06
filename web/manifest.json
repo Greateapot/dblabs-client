@@ -1,0 +1,11 @@
+{
+    "name": "dblabs",
+    "short_name": "dblabs",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "DBLabs Client",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false
+}
