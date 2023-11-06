@@ -41,6 +41,7 @@ class _AppState extends State<App> {
         ),
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
+          initialIndex: 1,
           length: 2,
           child: Scaffold(
             appBar: const TabBar(
