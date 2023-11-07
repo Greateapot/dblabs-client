@@ -74,21 +74,27 @@ const InputBorder formInputDecorationBorder = OutlineInputBorder(
 FormBuilderTextField buildTextFormBuilder({
   required String name,
   required String labelText,
+  String? initialValue,
+  bool isRequired = true,
+  bool isIdentifier = true,
 }) =>
     FormBuilderTextField(
       name: name,
+      initialValue: initialValue,
       decoration: InputDecoration(
         border: formInputDecorationBorder,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelText: labelText,
       ),
       validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(
-          errorText: "Это поле не может быть пустым",
-        ),
-        FormBuilderValidators.match(
-          identifierPattern,
-          errorText: "Значение не является идентификатором",
-        ),
+        if (isRequired)
+          FormBuilderValidators.required(
+            errorText: "Это поле не может быть пустым",
+          ),
+        if (isIdentifier)
+          FormBuilderValidators.match(
+            identifierPattern,
+            errorText: "Значение не является идентификатором",
+          ),
       ]),
     );

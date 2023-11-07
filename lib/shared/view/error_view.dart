@@ -8,7 +8,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Text(
+        child: SelectableText(
           "Ошибка! Код: ${error.code}\n${error.message}",
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,

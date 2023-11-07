@@ -11,13 +11,13 @@ class TableView extends StatelessWidget {
   Widget build(BuildContext context) {
     return DataTable2(
       columns: <DataColumn2>[
-        for (final v in table.columnNames) DataColumn2(label: Text(v)),
+        for (final v in table.columnNames) DataColumn2(label: SelectableText(v)),
       ],
       rows: <DataRow2>[
         for (final List<dynamic> v in table.rows)
           DataRow2(cells: [
             for (final dynamic e in v)
-              DataCell(Text(e == null ? "" : e.toString())),
+              DataCell(SelectableText(e == null ? "" : e.toString())),
           ]),
       ],
     );

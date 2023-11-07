@@ -17,7 +17,8 @@ class CreateDatabaseDialog extends StatelessWidget {
             labelText: 'Название новой базы данных',
           ),
         ],
-        onSubmit: () => Navigator.of(context)
-            .pop(formKey.currentState?.getRawValue<String>('database_name')),
+        onSubmit: () => Navigator.of(context).pop(
+          formKey.currentState?.fields['database_name']?.value,
+        ),
       );
 }

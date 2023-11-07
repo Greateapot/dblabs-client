@@ -17,7 +17,8 @@ class DropDatabaseDialog extends StatelessWidget {
             labelText: 'Название существующей базы данных',
           ),
         ],
-        onSubmit: () => Navigator.of(context)
-            .pop(formKey.currentState?.getRawValue<String>('database_name')),
+        onSubmit: () => Navigator.of(context).pop(
+          formKey.currentState?.fields['database_name']?.value,
+        ),
       );
 }

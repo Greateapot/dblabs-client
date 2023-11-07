@@ -36,7 +36,7 @@ class _AppState extends State<App> {
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFE630B2),
+            seedColor: const Color.fromARGB(255, 131, 96, 244),
           ),
         ),
         debugShowCheckedModeBanner: false,
