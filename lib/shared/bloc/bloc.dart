@@ -18,6 +18,7 @@ class LabsBlocBuilder<T extends StateStreamable> extends StatelessWidget {
         final LabsInitial _ => const HelloView(),
         final LabsOk _ => const OkView(),
         final LabsLoading _ => const LoadingView(),
+        final LabsApiError e => ApiErrorView(error: e.exception),
         final LabsError e => ErrorView(error: e.exception),
         final LabsTable t => TableView(table: t.table),
         _ => throw UnimplementedError(),

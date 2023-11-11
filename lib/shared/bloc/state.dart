@@ -11,8 +11,14 @@ final class LabsOk extends LabsState {}
 
 final class LabsLoading extends LabsState {}
 
-final class LabsError extends LabsState {
+final class LabsApiError extends LabsState {
   final api.ApiException exception;
+
+  const LabsApiError(this.exception);
+}
+
+final class LabsError extends LabsState {
+  final Exception exception;
 
   const LabsError(this.exception);
 }

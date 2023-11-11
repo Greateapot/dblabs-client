@@ -1,3 +1,4 @@
+import 'package:dblabs/shared/shared.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dblabs_api_repo/dblabs_api_repo.dart';
@@ -35,19 +36,18 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) => MaterialApp(
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 131, 96, 244),
-          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
         ),
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
-          initialIndex: 1,
-          length: 2,
+          initialIndex: 2,
+          length: 3,
           child: Scaffold(
             appBar: const TabBar(
               tabs: <Tab>[
                 Tab(text: "Лаб. 3 (2+4)"),
-                Tab(text: "Лаб. 4 (WIP)"),
+                Tab(text: "Лаб. 4"),
+                Tab(text: "Лаб. 6"),
               ],
             ),
             body: TabBarView(
@@ -55,6 +55,7 @@ class _AppState extends State<App> {
               children: [
                 Lab3Page(apiRepository: _apiRepository),
                 Lab4Page(apiRepository: _apiRepository),
+                Lab6Page(apiRepository: _apiRepository),
               ],
             ),
           ),

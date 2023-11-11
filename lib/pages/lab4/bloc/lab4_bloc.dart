@@ -38,6 +38,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -53,6 +55,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -69,6 +73,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -85,6 +91,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -100,6 +108,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -115,6 +125,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -131,6 +143,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -147,6 +161,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -162,6 +178,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -178,6 +196,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -193,6 +213,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -212,6 +234,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -231,6 +255,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -252,6 +278,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -267,6 +295,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -289,6 +319,8 @@ class Lab4Bloc extends Bloc<Lab4Event, LabsState> {
       );
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }

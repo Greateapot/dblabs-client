@@ -33,6 +33,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       await Lab3SqlQueries.createDatabase(_apiRepository);
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -46,6 +48,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       await Lab3SqlQueries.dropDatabase(_apiRepository);
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -59,6 +63,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       await Lab3SqlQueries.createTable(_apiRepository);
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -72,6 +78,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       await Lab3SqlQueries.dropTable(_apiRepository);
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -85,6 +93,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       await Lab3SqlQueries.fillTable(_apiRepository);
       emit(LabsOk());
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -98,6 +108,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
       Table table = await Lab3SqlQueries.getEmployees(_apiRepository);
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -112,6 +124,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
           await Lab3SqlQueries.getEmployeesPhoneNubersAndSalary(_apiRepository);
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -126,6 +140,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
           await Lab3SqlQueries.getEmployeesSortedByAddress(_apiRepository);
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
@@ -140,6 +156,8 @@ class Lab3Bloc extends Bloc<Lab3Event, LabsState> {
           _apiRepository);
       emit(LabsTable(table));
     } on ApiException catch (exception) {
+      emit(LabsApiError(exception));
+    } on Exception catch (exception) {
       emit(LabsError(exception));
     }
   }
