@@ -15,7 +15,7 @@ class ButtonsRowElement {
 class ButtonsRow extends StatefulWidget {
   const ButtonsRow({
     super.key,
-    required this.buttonValues,
+    required this.buttons,
     this.scrollDuration = 300,
     this.scrollStep = 400,
     this.padding = const EdgeInsets.all(8),
@@ -23,7 +23,7 @@ class ButtonsRow extends StatefulWidget {
 
   final double scrollStep;
   final int scrollDuration;
-  final List<ButtonsRowElement> buttonValues;
+  final List<ButtonsRowElement> buttons;
   final EdgeInsets padding;
 
   @override
@@ -83,9 +83,9 @@ class _ButtonsRowState extends State<ButtonsRow> {
             padding: const EdgeInsets.symmetric(horizontal: 80),
             controller: scrollController,
             scrollDirection: Axis.horizontal,
-            itemCount: widget.buttonValues.length,
+            itemCount: widget.buttons.length,
             itemBuilder: (context, index) =>
-                buttonBuilder(widget.buttonValues[index]),
+                buttonBuilder(widget.buttons[index]),
           ),
           Center(
             child: Row(

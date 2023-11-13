@@ -1,1 +1,0 @@
-export 'rename_table_dialog.dart';

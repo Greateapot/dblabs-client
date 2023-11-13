@@ -1,11 +1,17 @@
 import 'package:dblabs/shared/shared.dart';
+import 'package:dblabs_api_repo/dblabs_api_repo.dart' as api;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:dblabs_api_repo/dblabs_api_repo.dart';
 
-import 'pages/pages.dart';
+import 'router.dart';
 
-void main() => runApp(const App());
+void main() {
+  api.ApiRepositoryImpl(
+    'localhost',
+    port: kIsWeb ? 8080 : 9090,
+  );
+  runApp(const App());
+}
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -15,50 +21,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late final ApiRepository _apiRepository;
-
   @override
-  void initState() {
-    _apiRepository = ApiRepositoryImpl(
-      'localhost',
-      port: kIsWeb ? 8080 : 9090,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _apiRepository.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
         ),
         debugShowCheckedModeBanner: false,
-        home: DefaultTabController(
-          initialIndex: 2,
-          length: 3,
-          child: Scaffold(
-            appBar: const TabBar(
-              tabs: <Tab>[
-                Tab(text: "Лаб. 3 (2+4)"),
-                Tab(text: "Лаб. 4"),
-                Tab(text: "Лаб. 6"),
-              ],
-            ),
-            body: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                Lab3Page(apiRepository: _apiRepository),
-                Lab4Page(apiRepository: _apiRepository),
-                Lab6Page(apiRepository: _apiRepository),
-              ],
-            ),
-          ),
-        ),
+        routerConfig: router,
       );
 }
