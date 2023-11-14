@@ -5,18 +5,19 @@ import 'package:dblabs_api_repo/dblabs_api_repo.dart' as api;
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-class EditColumnDialogFormBloc extends FormBloc<String, String> {
-  final columnName = TextFieldBloc(validators: [
+class EditProcedureParameterDialogFormBloc extends FormBloc<String, String> {
+  final paramName = TextFieldBloc(validators: [
     FieldBlocValidators.required,
   ]);
+  final type = SelectFieldBloc(
+    items: api.ProcedureParameterType.values,
+    validators: [FieldBlocValidators.required],
+  );
   final dataType = SelectFieldBloc(
     items: api.DataTypeType.values,
     validators: [FieldBlocValidators.required],
   );
   final unsigned = BooleanFieldBloc();
-  final autoIncrement = BooleanFieldBloc();
-  final notNull = BooleanFieldBloc();
-
   final floatSize = TextFieldBloc();
   final stringSize = TextFieldBloc();
   final d = TextFieldBloc();
@@ -53,20 +54,22 @@ class EditColumnDialogFormBloc extends FormBloc<String, String> {
     api.DataTypeType.TEXT,
   ];
 
-  final void Function(api.Column column) callback;
+  final void Function(api.ProcedureParameter parameter) callback;
 
-  EditColumnDialogFormBloc(this.callback, [api.Column? column]) {
-    if (column != null) {
-      columnName.updateValue(column.columnName);
-      dataType.updateValue(column.dataType.type);
-      unsigned.updateValue(column.dataType.intAttrs.unsigned);
-      autoIncrement.updateValue(column.dataType.intAttrs.autoIncrement);
-      floatSize.updateValue(column.dataType.doubleAttrs.size.toString());
-      stringSize.updateValue(column.dataType.stringAttrs.size.toString());
-      d.updateValue(column.dataType.doubleAttrs.d.toString());
-      fsp.updateValue(column.dataType.timeAttrs.fsp.toString());
-      enumValues.updateValue(column.dataType.enumAttrs.values.join(', '));
-      notNull.updateValue(column.notNull);
+  EditProcedureParameterDialogFormBloc(
+    this.callback, [
+    api.ProcedureParameter? parameter,
+  ]) {
+    if (parameter != null) {
+      paramName.updateValue(parameter.paramName);
+      type.updateValue(parameter.type);
+      dataType.updateValue(parameter.dataType.type);
+      unsigned.updateValue(parameter.dataType.intAttrs.unsigned);
+      floatSize.updateValue(parameter.dataType.doubleAttrs.size.toString());
+      stringSize.updateValue(parameter.dataType.stringAttrs.size.toString());
+      d.updateValue(parameter.dataType.doubleAttrs.d.toString());
+      fsp.updateValue(parameter.dataType.timeAttrs.fsp.toString());
+      enumValues.updateValue(parameter.dataType.enumAttrs.values.join(', '));
     }
 
     stringSize.updateValidators([stringValidator]);
@@ -76,11 +79,10 @@ class EditColumnDialogFormBloc extends FormBloc<String, String> {
     enumValues.updateValidators([enumValidator]);
 
     addFieldBlocs(fieldBlocs: [
-      columnName,
+      paramName,
+      type,
       dataType,
       unsigned,
-      autoIncrement,
-      notNull,
       floatSize,
       stringSize,
       d,
@@ -118,14 +120,15 @@ class EditColumnDialogFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() {
-    final c = api.Column(
-      columnName: columnName.value,
+    emitSuccess(canSubmitAgain: true);
+    callback(api.ProcedureParameter(
+      paramName: paramName.value,
+      type: type.value,
       dataType: api.DataType(
         type: dataType.value,
         intAttrs: isIntType
             ? api.IntDataTypeAttrs(
                 unsigned: unsigned.value,
-                autoIncrement: autoIncrement.value,
               )
             : null,
         doubleAttrs: isFloatType
@@ -153,39 +156,47 @@ class EditColumnDialogFormBloc extends FormBloc<String, String> {
               )
             : null,
       ),
-    );
-    callback(c);
-    emitSuccess(canSubmitAgain: true);
+    ));
   }
 }
 
-class EditColumnDialog extends StatelessWidget {
-  const EditColumnDialog({
+class EditProcedureParameterDialog extends StatelessWidget {
+  const EditProcedureParameterDialog({
     required this.callback,
-    this.column,
+    this.parameter,
     super.key,
   });
 
-  final void Function(api.Column column) callback;
-  final api.Column? column;
+  final void Function(api.ProcedureParameter column) callback;
+  final api.ProcedureParameter? parameter;
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => EditColumnDialogFormBloc(callback, column),
-        child: BaseDialog<EditColumnDialogFormBloc>(
+        create: (context) =>
+            EditProcedureParameterDialogFormBloc(callback, parameter),
+        child: BaseDialog<EditProcedureParameterDialogFormBloc>(
           popOnSuccess: true,
           title: "Редактирование столбца",
           bodyBuilder: (context, formBloc) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              DropdownFieldBlocBuilder<api.ProcedureParameterType>(
+                selectFieldBloc: formBloc.type,
+                decoration: const InputDecoration(
+                  labelText: 'Тип параметра',
+                ),
+                itemBuilder: (context, value) => FieldItem(
+                  child: Text(value.name),
+                ),
+              ),
               TextFieldBlocBuilder(
-                textFieldBloc: formBloc.columnName,
+                textFieldBloc: formBloc.paramName,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  labelText: 'Название столбца',
+                  labelText: 'Название параметра',
                 ),
               ),
               DropdownFieldBlocBuilder<api.DataTypeType>(
@@ -197,10 +208,6 @@ class EditColumnDialog extends StatelessWidget {
                   child: Text(value.name),
                 ),
               ),
-              CheckboxFieldBlocBuilder(
-                booleanFieldBloc: formBloc.notNull,
-                body: const Text("Не может принимать значение null"),
-              ),
               BlocBuilder(
                 bloc: formBloc.dataType,
                 builder: (context, _) => Column(
@@ -208,17 +215,9 @@ class EditColumnDialog extends StatelessWidget {
                   children: [
                     Visibility(
                       visible: formBloc.isIntType,
-                      child: Column(
-                        children: [
-                          CheckboxFieldBlocBuilder(
-                            booleanFieldBloc: formBloc.unsigned,
-                            body: const Text("Беззнаковое"),
-                          ),
-                          CheckboxFieldBlocBuilder(
-                            booleanFieldBloc: formBloc.autoIncrement,
-                            body: const Text("Автоматическое приращение"),
-                          ),
-                        ],
+                      child: CheckboxFieldBlocBuilder(
+                        booleanFieldBloc: formBloc.unsigned,
+                        body: const Text("Беззнаковое"),
                       ),
                     ),
                     Visibility(

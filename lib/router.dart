@@ -41,6 +41,15 @@ final editRoutes = [
       ),
     ),
   ),
+  GoRoute(
+    path: 'editProcedureParameter',
+    pageBuilder: (context, state) => DialogPage(
+      builder: (context) => EditProcedureParameterDialog(
+        callback: (state.extra as Map<String, dynamic>)['callback'],
+        parameter: (state.extra as Map<String, dynamic>)['parameter'],
+      ),
+    ),
+  ),
 ];
 
 final router = GoRouter(
@@ -154,6 +163,48 @@ final router = GoRouter(
           routes: subRoutes,
           pageBuilder: (context, state) => DialogPage(
             builder: (context) => const DropTriggerDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'set',
+          routes: subRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const SetDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'createProcedure',
+          routes: subRoutes + editRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const CreateProcedureDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'dropProcedure',
+          routes: subRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const DropProcedureDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'callProcedure',
+          routes: subRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const CallProcedureDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'dropView',
+          routes: subRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const DropViewDialog(),
+          ),
+        ),
+        GoRoute(
+          path: 'createView',
+          routes: subRoutes + editRoutes,
+          pageBuilder: (context, state) => DialogPage(
+            builder: (context) => const CreateViewDialog(),
           ),
         ),
       ],

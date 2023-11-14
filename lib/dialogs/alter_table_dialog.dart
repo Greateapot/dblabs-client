@@ -146,6 +146,9 @@ class AlterTableDialog extends StatelessWidget {
                 ),
               ),
               DropdownFieldBlocBuilder(
+                decoration: const InputDecoration(
+                  labelText: 'Тип изменения',
+                ),
                 selectFieldBloc: formBloc.type,
                 itemBuilder: (context, value) => FieldItem(
                   child: Text(value.name),

@@ -52,7 +52,12 @@ class CreateTriggerDialogFormBloc extends FormBloc<String, String> {
     try {
       await api.ApiRepository.instance.createTrigger(
         triggerName: triggerName.value,
-        triggerBody: triggerBody.value,
+        triggerBody: triggerBody.value
+            .replaceAll(';', '\n')
+            .split('\n')
+            .where((element) => element.trim() != "")
+            .map((e) => "${e.trim()};")
+            .join('\n'),
         tableName: tableName.value,
         triggerEvent: triggerEvent.value!,
         triggerTime: triggerTime.value!,
@@ -174,6 +179,7 @@ class CreateTriggerDialog extends StatelessWidget {
                   labelText: 'Тело триггера',
                   hintText: 'пр: NEW.val = IF(NEW.val>100, OLD.val, NEW.val)',
                 ),
+                maxLines: null,
               ),
             ],
           ),

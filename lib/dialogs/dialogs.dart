@@ -14,14 +14,21 @@ export 'drop_trigger_dialog.dart';
 export 'show_tables_dialog.dart';
 export 'show_table_struct_dialog.dart';
 
+export 'create_view_dialog.dart';
+export 'drop_view_dialog.dart';
+
+export 'create_procedure_dialog.dart';
+export 'drop_procedure_dialog.dart';
+export 'call_procedure_dialog.dart';
+
+export 'set_dialog.dart';
 export 'update_dialog.dart';
 export 'join_dialog.dart';
 export 'delete_dialog.dart';
 
+export 'edit_procedure_parameter.dart';
 export 'edit_column_dialog.dart';
 export 'edit_select_data_dialog.dart';
-
-export 'forms/forms.dart';
 
 export 'success_dialog.dart';
 export 'failed_dialog.dart';

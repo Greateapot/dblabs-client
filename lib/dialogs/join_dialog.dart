@@ -136,6 +136,9 @@ class JoinDialog extends StatelessWidget {
                 ),
               ),
               DropdownFieldBlocBuilder(
+                decoration: const InputDecoration(
+                  labelText: 'Тип объединения',
+                ),
                 selectFieldBloc: formBloc.joinType,
                 itemBuilder: (context, value) => FieldItem(
                   child: Text(value.toString()),

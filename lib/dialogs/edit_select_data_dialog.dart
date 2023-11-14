@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class EditSelectDataDialogFormBloc extends FormBloc<String, String> {
-  final tableName = TextFieldBloc(validators: [
-    FieldBlocValidators.required,
-  ]);
+  final tableName = TextFieldBloc();
   final columnNames = TextFieldBloc();
   final whereCondition = TextFieldBloc();
 

@@ -20,6 +20,7 @@ class CreateTableDialogFormBloc extends FormBloc<String, String> {
   CreateTableDialogFormBloc() {
     addFieldBlocs(fieldBlocs: [
       tableName,
+      primaryKey,
     ]);
   }
 
@@ -102,37 +103,61 @@ class CreateTableDialog extends StatelessWidget {
                   ),
                 ),
               ),
-              for (final entry in formBloc.columns.entries)
-                ListTile(
-                  leading: ElevatedButton(
-                    child: const Icon(Icons.edit),
-                    onPressed: () => context.go(
-                      '/createTable/editColumn',
-                      extra: {
-                        "callback": (column) {
-                          formBloc.removeColumn(entry.value.columnName);
-                          formBloc.addColumn(column);
-                        },
-                        "column": entry.value,
-                      },
-                    ),
-                  ),
-                  title: Text(entry.key),
-                  trailing: ElevatedButton(
-                    child: const Icon(Icons.delete),
-                    onPressed: () => formBloc.removeColumn(entry.key),
-                  ),
+              BlocBuilder(
+                bloc: formBloc.primaryKey,
+                builder: (context, state) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final entry in formBloc.columns.entries)
+                      ListTile(
+                        leading: ElevatedButton(
+                          child: const Icon(Icons.edit),
+                          onPressed: () => context.go(
+                            '/createTable/editColumn',
+                            extra: {
+                              "callback": (api.Column column) {
+                                formBloc.removeColumn(entry.value.columnName);
+                                formBloc.addColumn(column);
+                              },
+                              "column": entry.value,
+                            },
+                          ),
+                        ),
+                        title: Text(entry.key),
+                        trailing: ElevatedButton(
+                          child: const Icon(Icons.delete),
+                          onPressed: () => formBloc.removeColumn(entry.key),
+                        ),
+                      ),
+                  ],
                 ),
+              ),
               ElevatedButton(
                 child: const Text("Добавить столбец"),
                 onPressed: () => context.go(
                   '/createTable/editColumn',
-                  extra: {"callback": formBloc.addColumn},
+                  extra: {
+                    "callback": (api.Column column) {
+                      debugPrint(
+                        "asd${column.dataType.intAttrs.autoIncrement.toString()}",
+                      );
+                      formBloc.addColumn(column);
+                    }
+                  },
                 ),
               ),
-              DropdownFieldBlocBuilder(
-                selectFieldBloc: formBloc.primaryKey,
-                itemBuilder: (context, value) => FieldItem(child: Text(value)),
+              BlocBuilder(
+                bloc: formBloc.primaryKey,
+                builder: (context, state) => formBloc.columns.isEmpty
+                    ? const SizedBox.square(dimension: 0)
+                    : DropdownFieldBlocBuilder(
+                        decoration: const InputDecoration(
+                          labelText: 'Первичный ключ',
+                        ),
+                        selectFieldBloc: formBloc.primaryKey,
+                        itemBuilder: (context, value) =>
+                            FieldItem(child: Text(value)),
+                      ),
               ),
             ],
           ),

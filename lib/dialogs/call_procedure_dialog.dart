@@ -5,14 +5,14 @@ import 'package:dblabs_api_repo/dblabs_api_repo.dart' as api;
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
-class DropTableDialogFormBloc extends FormBloc<String, String> {
-  final tableName = TextFieldBloc(validators: [
+class CallProcedureDialogFormBloc extends FormBloc<String, String> {
+  final expr = TextFieldBloc(validators: [
     FieldBlocValidators.required,
   ]);
 
-  DropTableDialogFormBloc() {
+  CallProcedureDialogFormBloc() {
     addFieldBlocs(fieldBlocs: [
-      tableName,
+      expr,
     ]);
   }
 
@@ -20,11 +20,14 @@ class DropTableDialogFormBloc extends FormBloc<String, String> {
   FutureOr<void> onSubmitting() async {
     emitLoading();
     try {
-      await api.ApiRepository.instance.dropTable(
-        tableName: tableName.value,
+      await api.ApiRepository.instance.callProcedure(
+        expr: expr.value,
       );
       emitLoaded();
-      emitSuccess(canSubmitAgain: true, successResponse: "Таблица удалена");
+      emitSuccess(
+        canSubmitAgain: true,
+        successResponse: "Выражение выполнено(?)",
+      );
     } catch (exception) {
       emitLoaded();
       emitFailure(failureResponse: exception.toString());
@@ -32,26 +35,26 @@ class DropTableDialogFormBloc extends FormBloc<String, String> {
   }
 }
 
-class DropTableDialog extends StatelessWidget {
-  const DropTableDialog({super.key});
+class CallProcedureDialog extends StatelessWidget {
+  const CallProcedureDialog({super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => DropTableDialogFormBloc(),
-        child: BaseDialog<DropTableDialogFormBloc>(
-          title: "Удалить таблицу",
+        create: (context) => CallProcedureDialogFormBloc(),
+        child: BaseDialog<CallProcedureDialogFormBloc>(
+          title: "Выполнить(?) выражение (процедуру)",
           bodyBuilder: (context, formBloc) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldBlocBuilder(
-                textFieldBloc: formBloc.tableName,
+                textFieldBloc: formBloc.expr,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  labelText: 'Название существующей таблицы',
-                  hintText: 'имя_бд.имя_табл',
+                  labelText: 'Выражение',
+                  hintText: 'пр: имя_бд.имя_проц(парам1, парам2, ...)',
                 ),
               ),
             ],
